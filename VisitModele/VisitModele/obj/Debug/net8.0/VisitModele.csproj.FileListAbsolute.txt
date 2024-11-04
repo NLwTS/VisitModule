@@ -1,0 +1,14 @@
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\bin\Debug\net8.0\VisitModele.exe
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\bin\Debug\net8.0\VisitModele.deps.json
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\bin\Debug\net8.0\VisitModele.runtimeconfig.json
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\bin\Debug\net8.0\VisitModele.dll
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\bin\Debug\net8.0\VisitModele.pdb
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\obj\Debug\net8.0\VisitModele.GeneratedMSBuildEditorConfig.editorconfig
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\obj\Debug\net8.0\VisitModele.AssemblyInfoInputs.cache
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\obj\Debug\net8.0\VisitModele.AssemblyInfo.cs
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\obj\Debug\net8.0\VisitModele.csproj.CoreCompileInputs.cache
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\obj\Debug\net8.0\VisitModele.dll
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\obj\Debug\net8.0\refint\VisitModele.dll
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\obj\Debug\net8.0\VisitModele.pdb
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\obj\Debug\net8.0\VisitModele.genruntimeconfig.cache
+E:\ВУЗ\ПОПАС\VisitModele\VisitModele\obj\Debug\net8.0\ref\VisitModele.dll
