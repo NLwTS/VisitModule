@@ -39,24 +39,6 @@ namespace VisitModele.MemberUniversity
 
         private string _prefecture;//
 
-        public void displayInfo()
-        {
-            Console.WriteLine("Фамилия " + Surname);
-            Console.WriteLine("Имя " + Name);
-            Console.WriteLine("Отчество " + Lastname);
-            Console.WriteLine("Факультет " + Faculty);
-            Console.WriteLine("Кафедра " + Department);
-            Console.WriteLine("Направление " + Specialization);
-            Console.WriteLine("Почта " + Email);
-            Console.WriteLine("Номер телефона " + Phone);
-            Console.WriteLine("Академический статус " + AcademicStatus);
-            Console.WriteLine("Пол " + Gender);
-            Console.WriteLine("Дата рождения " + BirthDay);
-            Console.WriteLine("Город " + City);
-            Console.WriteLine("Страна " + Country);
-            Console.WriteLine("Префектура " + Prefecture);
-        }
-
         public string Name
         {
             get => _name;
@@ -168,7 +150,23 @@ namespace VisitModele.MemberUniversity
             Prefecture = prefecture;
         }
 
-
+        /*
+        public void displayInfo()
+        {
+            Console.WriteLine("Фамилия " + Surname);
+            Console.WriteLine("Имя " + Name);
+            Console.WriteLine("Отчество " + Lastname);
+            Console.WriteLine("Факультет " + Faculty);
+            Console.WriteLine("Кафедра " + Department);
+            Console.WriteLine("Направление " + Specialization);
+            Console.WriteLine("Почта " + Email);
+            Console.WriteLine("Номер телефона " + Phone);
+            Console.WriteLine("Академический статус " + AcademicStatus);
+            Console.WriteLine("Пол " + Gender);
+            Console.WriteLine("Дата рождения " + BirthDay);
+            Console.WriteLine("Город " + City);
+            Console.WriteLine("Страна " + Country);
+            Console.WriteLine("Префектура " + Prefecture);
+        }*/
     }
-
 }
