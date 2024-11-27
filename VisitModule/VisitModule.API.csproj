@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Bonch.Infrastructure\VisitModule.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UniverMember\" />
+  </ItemGroup>
+
 </Project>

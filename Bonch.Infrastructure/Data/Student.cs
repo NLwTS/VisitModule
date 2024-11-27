@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VisitModele.MemberUniversity
+namespace VisitModule.API.UniversityMember
 {
     public class Student : UniversityMember
     {
@@ -75,7 +75,7 @@ namespace VisitModele.MemberUniversity
             get => _statusScholarship;
             set
             {
-                if (!(value.Contains("Да")||value.Contains("Нет")))
+                if (!(value.Contains("Да") || value.Contains("Нет")))
                 {
                     throw new ArgumentException("Неверные сведения о наличие стипендии у студента");
                 }
@@ -107,39 +107,7 @@ namespace VisitModele.MemberUniversity
             set => _participationAdditionalPrograms = value;
         }
 
-        public Student(string name, string surname, string lastname, DateTime entrance, DateTime dasEnde, string faculty, string department,
-            string specialization, string fofEducation, string email, string phone, string academicStatus, string gender, string birthday,
-            string city, string country, string prefecture, string statusScholarship, decimal scholarship, int year, int group, string studentId, 
-            string specialSituation, string participationAdditionalPrograms)
-            : base(name, surname, lastname, faculty, department, specialization, email, phone, academicStatus, gender,
-                   birthday, city, country, prefecture)
-        {
-            Entrance = entrance;
-            DasEnde = dasEnde;
-            FofEducation = fofEducation;
-            StatusScholarship = statusScholarship;
-            Scholarship = scholarship;
-            Year = year;
-            Group = group;
-            StudentId = studentId;
-            SpecialSituation = specialSituation;
-            ParticipationAdditionalPrograms = participationAdditionalPrograms;
-        }
-
-        public void DisplayStudentInfo()
-        {
-            Console.WriteLine($"ФИО: {Name} {Surname} {Lastname}");
-            Console.WriteLine($"Год поступления: {Entrance.ToString("dd.MM.yyyy")}, Год окончания: {DasEnde.ToString("dd.MM.yyyy")}");
-            Console.WriteLine($"Факультет: {Faculty}, Кафедра: {Department}, Специальность: {Specialization}");
-            Console.WriteLine($"Форма обучения: {FofEducation}");
-            Console.WriteLine($"Email: {Email}, Телефон: {Phone}");
-            Console.WriteLine($"Статус: {AcademicStatus}, Пол: {Gender}, Дата рождения: {BirthDay}");
-            Console.WriteLine($"Город: {City}, Страна: {Country}, Регион: {Prefecture}");
-            Console.WriteLine($"Наличие стипендии: {StatusScholarship}, Стипендия: {Scholarship} руб.");
-            Console.WriteLine($"Курс: {Year}, Группа: {Group}");
-            Console.WriteLine($"Номер студенческого: {StudentId}");
-            Console.WriteLine($"Льготы: {SpecialSituation}");
-            Console.WriteLine($"Участие в дополнительных программах: {ParticipationAdditionalPrograms}");
-        }
+        public Student() { }
+       
     }
 }
