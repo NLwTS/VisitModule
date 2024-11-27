@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bonch.Domain\Bonch.Domain.csproj" />
-    <ProjectReference Include="..\Bonch.Infrastructure\Bonch.Infrastructure.csproj" />
+    <ProjectReference Include="..\Bonch.Domain\VisitModule.Domain.csproj" />
+    <ProjectReference Include="..\Bonch.Infrastructure\VisitModule.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
