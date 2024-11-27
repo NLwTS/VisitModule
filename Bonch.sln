@@ -5,9 +5,9 @@ VisualStudioVersion = 17.10.34607.79
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisitModule.API", "VisitModule\VisitModule.API.csproj", "{0C8BA2F2-4364-46C3-91D9-F85F207722EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bonch.Domain", "Bonch.Domain\Bonch.Domain.csproj", "{3BC5CD35-1072-4650-A65F-ADFBA12E430D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisitModule.Domain", "Bonch.Domain\VisitModule.Domain.csproj", "{3BC5CD35-1072-4650-A65F-ADFBA12E430D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bonch.Infrastructure", "Bonch.Infrastructure\Bonch.Infrastructure.csproj", "{296DE286-438A-41A2-9D9F-95AC5EDD0463}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisitModule.Infrastructure", "Bonch.Infrastructure\VisitModule.Infrastructure.csproj", "{296DE286-438A-41A2-9D9F-95AC5EDD0463}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{8525C342-C459-45BD-B04C-A79FA22EA35F}"
 	ProjectSection(SolutionItems) = preProject
