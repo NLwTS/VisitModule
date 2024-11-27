@@ -1,4 +1,5 @@
 ﻿
+using VisitModele.AcademicDiscipline;
 using VisitModele.MemberUniversity; //Для демонстрации базового класса
 
 namespace VisitModele
@@ -92,6 +93,65 @@ namespace VisitModele
 
             professor3.DisplayProfessorInfo();
             Console.WriteLine("\n----------------------\n");
+
+            //***************************************************************************************
+            var discipline1 = new Discipline(
+                nameDisc: "Математический анализ",
+                description: "Изучение основ анализа функций и пределов.",
+                codeDisc: "MATH101",
+                purpose: new List<string> { "Развитие логического мышления", "Формирование математических навыков" },
+                tasks: new List<string> { "Изучить дифференциальные исчисления", "Научиться решать интегралы" },
+                quantityHours: new List<QuantityHours>
+                {
+                    new QuantityHours(lecture: 40, practical: 30, independentWork: 20)
+                },
+                formOfStudy: "Очная, Очно-Заочная",
+                assessmentMethods: new List<string> { "Экзамен", "Тестирование" },
+                literature: new List<string> { "Кудрявцев Л.Д. - Математический анализ", "Шарыгин И.Ф. - Основы алгебры и анализа" },
+                professors: new List<string> { "Иванов И.И.", "Петров П.П." }
+            );
+
+            var discipline2 = new Discipline(
+                nameDisc: "Программирование на C#",
+                description: "Основы объектно-ориентированного программирования и языка C#.",
+                codeDisc: "CSHARP102",
+                purpose: new List<string> { "Научиться писать программы", "Изучить концепции ООП" },
+                tasks: new List<string> { "Реализовать проекты на C#", "Освоить LINQ и коллекции" },
+                quantityHours: new List<QuantityHours>
+                {
+                    new QuantityHours(lecture: 20, practical: 40, independentWork: 60)
+                },
+                formOfStudy: "Дистанционная, Очно-Заочная",
+                assessmentMethods: new List<string> { "Курсовая работа", "Практические задания" },
+                literature: new List<string> { "Троелсен А. - C# и платформа .NET", "Скит Дж. - C# для профессионалов" },
+                professors: new List<string> { "Сидоров С.С.", "Кузнецова А.А." }
+            );
+
+            var discipline3 = new Discipline(
+                nameDisc: "Физика",
+                description: "Фундаментальные законы природы и их применение.",
+                codeDisc: "PHYS103",
+                purpose: new List<string> { "Изучить основные законы физики", "Применять физические законы на практике" },
+                tasks: new List<string> { "Решение задач по механике", "Изучение законов термодинамики" },
+                quantityHours: new List<QuantityHours>
+                {
+                    new QuantityHours(lecture: 50, practical: 40, independentWork: 20)
+                },
+                formOfStudy: "Очная",
+                assessmentMethods: new List<string> { "Лабораторные работы", "Устный экзамен" },
+                literature: new List<string> { "Савельев И.В. - Курс физики", "Гринев А.Ю. - Физика для инженеров" },
+                professors: new List<string> { "Александров А.А.", "Евдокимов Е.Е." }
+            );
+
+            // Демонстрация информации о предметах
+            var disciplines = new List<Discipline> { discipline1, discipline2, discipline3 };
+
+            Console.WriteLine("Информация о предметах:\n");
+            foreach (var discipline in disciplines)
+            {
+                discipline.DisciplineInfo();
+                Console.WriteLine(new string('-', 50));
+            }
         }
     }
 }
