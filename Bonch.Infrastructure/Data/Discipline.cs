@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-
-namespace VisitModule.API.UniversityMember
+namespace VisitModule.AcademicDiscipline
 {
     public class QuantityHours
     {
@@ -131,8 +130,44 @@ namespace VisitModule.API.UniversityMember
             get => _professors;
             set => _professors = value ?? new List<string>();
         }
-        public Discipline() { } // Конструктор по умолчанию для EF
-
-
+        public Discipline(string nameDisc, string description, string codeDisc, List<string> purpose, List<string> tasks,
+            List<QuantityHours> quantityHours, string formOfStudy, List<string> assessmentMethods, List<string> literature,
+            List<string> professors)
+        {
+            NameDisc = nameDisc;
+            Description = description;
+            CodeDisc = codeDisc;
+            Purpose = purpose;
+            Tasks = tasks;
+            QuantityHours = quantityHours;
+            FormOfStudy = formOfStudy;
+            AssessmentMethods = assessmentMethods;
+            Literature = literature;
+            Professors = professors;
+        }
+        public void DisciplineInfo()
+        {
+            Console.WriteLine($"Название дисциплины: {NameDisc}");
+            Console.WriteLine($"Описание: {Description}");
+            Console.WriteLine($"Код дисциплины: {CodeDisc}");
+            Console.WriteLine($"Форма обучения: {FormOfStudy}");
+            Console.WriteLine($"Цели дисциплины: {(Purpose.Count > 0 ? string.Join(", ", Purpose) : "Нет данных")}");
+            Console.WriteLine($"Задачи дисциплины: {(Tasks.Count > 0 ? string.Join(", ", Tasks) : "Нет данных")}");
+            Console.WriteLine($"Количество часов:");
+            if (QuantityHours.Count > 0)
+            {
+                foreach (var hours in QuantityHours)
+                {
+                    Console.WriteLine($" - {hours}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Нет данных о количестве часов.");
+            }
+            Console.WriteLine($"Методы оценки знаний: {(AssessmentMethods.Count > 0 ? string.Join(", ", AssessmentMethods) : "Нет данных")}");
+            Console.WriteLine($"Литература: {(Literature.Count > 0 ? string.Join(", ", Literature) : "Нет данных")}");
+            Console.WriteLine($"Преподаватели: {(Professors.Count > 0 ? string.Join(", ", Professors) : "Нет данных")}");
+        }
     }
 }

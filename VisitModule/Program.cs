@@ -20,6 +20,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 var app = builder.Build();
+app.MapBlazorHub();
+app.MapFallbackToPage("/_Host");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

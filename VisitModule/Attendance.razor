@@ -1,0 +1,43 @@
+﻿@inject AttendanceService AttendanceService
+
+<h3>Учет посещаемости</h3>
+
+@if (AttendanceRecords == null)
+{
+    <p>Загрузка...</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Студент</th>
+                <th>Дисциплина</th>
+                <th>Присутствие</th>
+                <th>Примечания</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var record in AttendanceRecords)
+            {
+                <tr>
+                    <td>@record.AttendanceDate.ToShortDateString()</td>
+                    <td>@record.StudentId</td>
+                    <td>@record.DisciplineId</td>
+                    <td>@(record.IsPresent ? "Присутствовал" : "Отсутствовал")</td>
+                    <td>@record.Notes</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<AttendanceRecord> AttendanceRecords;
+
+    protected override async Task OnInitializedAsync()
+    {
+        AttendanceRecords = await AttendanceService.GetAttendanceByStudentAsync(1); // Получение записей
+    }
+}
