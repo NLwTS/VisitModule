@@ -107,7 +107,7 @@ namespace VisitModule.API.UniversityMember
             set => _participationAdditionalPrograms = value;
         }
 
-        public Student() { }
+        
        
     }
 }
