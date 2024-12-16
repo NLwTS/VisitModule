@@ -1,6 +1,0 @@
-@VisitModule.API_HostAddress = http://localhost:5025
-
-GET {{VisitModule.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
