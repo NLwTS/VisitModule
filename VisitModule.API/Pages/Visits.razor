@@ -1,0 +1,44 @@
+﻿@page "/visits"
+@inject VisitModule.Infrastructure.Repository.VisitRepository VisitRepository
+
+<h3>Посещения</h3>
+
+@if (visits == null)
+{
+    <p>Загрузка...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя посетителя</th>
+                <th>Цель</th>
+                <th>Дата</th>
+                <th>Местоположение</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var visit in visits)
+            {
+                <tr>
+                    <td>@visit.Id</td>
+                    <td>@visit.VisitorName</td>
+                    <td>@visit.Purpose</td>
+                    <td>@visit.VisitDate.ToShortDateString()</td>
+                    <td>@visit.Location</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<VisitModule.Domain.Model.Visit> visits;
+
+    protected override async Task OnInitializedAsync()
+    {
+        visits = await VisitRepository.GetVisitsAsync();
+    }
+}

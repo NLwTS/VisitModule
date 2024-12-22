@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VisitModule.Domain.Models;
+using VisitModule.Domain.Model;
 using VisitModule.Infrastructure.Repository;
 
 namespace VisitModule.API.Controllers

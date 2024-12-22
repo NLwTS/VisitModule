@@ -1,16 +1,17 @@
-﻿namespace VisitModule.Domain.Models
+﻿namespace VisitModule.Domain.Model
 
 {
     public class Visit
-{
-    public int Id { get; set; }
-    public int StudentId { get; set; }
-    public int ClassId { get; set; }
-    public DateTime VisitDate { get; set; }
-    public bool IsPresent { get; set; }
-}
+    {
+        public int Id { get; set; }                      // Уникальный идентификатор
+        public string VisitorName { get; set; }          // Имя посетителя
+        public string Purpose { get; set; }              // Цель визита
+        public string Location { get; set; }             // Локация визита
+        public DateTime VisitDate { get; set; }          // Дата визита
+        public TimeSpan Duration { get; set; }           // Продолжительность визита
+    }
 
-public class Student
+    public class Student
 {
     public int Id { get; set; }
     public string FullName { get; set; } = string.Empty;
