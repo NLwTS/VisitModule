@@ -1,0 +1,100 @@
+﻿@page "/add-visit"
+@using VisitModule.Domain.Model
+@using VisitModule.Infrastructure.Data
+@using VisitModule.Domain
+@using Microsoft.EntityFrameworkCore
+@inject VisitContext DbContext
+
+<h3>Добавить визит</h3>
+
+<EditForm Model="visit" OnValidSubmit="AddVisit">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label for="VisitorName" class="form-label">Имя посетителя</label>
+        <InputText id="VisitorName" class="form-control" @bind-Value="visit.VisitorName" />
+        <ValidationMessage For="() => visit.VisitorName" />
+    </div>
+
+    <div class="mb-3">
+        <label for="Purpose" class="form-label">Цель визита</label>
+        <InputText id="Purpose" class="form-control" @bind-Value="visit.Purpose" />
+        <ValidationMessage For="() => visit.Purpose" />
+    </div>
+
+    <div class="mb-3">
+        <label for="Location" class="form-label">Локация</label>
+        <InputText id="Location" class="form-control" @bind-Value="visit.Location" />
+        <ValidationMessage For="() => visit.Location" />
+    </div>
+
+    <div class="mb-3">
+        <label for="VisitDate" class="form-label">Дата визита</label>
+        <InputDate id="VisitDate" class="form-control" @bind-Value="visit.VisitDate" />
+        <ValidationMessage For="() => visit.VisitDate" />
+    </div>
+
+    <div class="mb-3">
+        <label for="Duration" class="form-label">Продолжительность (часы:минуты)</label>
+        <InputText id="Duration" class="form-control" @bind-Value="duration" />
+        <ValidationMessage For="() => duration" />
+    </div>
+
+    <div class="mb-3">
+        <label for="ClassroomId" class="form-label">Аудитория</label>
+        <InputSelect id="ClassroomId" class="form-control" @bind-Value="visit.ClassroomId">
+            <option value="">Выберите аудиторию</option>
+            @foreach (var classroom in classrooms)
+            {
+                <option value="@classroom.Id">@classroom.ClassName</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="() => visit.ClassroomId" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Добавить</button>
+</EditForm>
+
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@code {
+    private Visit visit = new Visit();
+    private string? duration;
+    private string? errorMessage;
+    private List<Classroom> classrooms = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        classrooms = await DbContext.Classrooms.ToListAsync();
+    }
+
+    private async Task AddVisit()
+    {
+        try
+        {
+            if (TimeSpan.TryParse(duration, out var parsedDuration))
+            {
+                visit.Duration = parsedDuration;
+
+                // Преобразуем дату визита в UTC
+                visit.VisitDate = DateTime.SpecifyKind(visit.VisitDate, DateTimeKind.Utc);
+
+                DbContext.Visits.Add(visit);
+                await DbContext.SaveChangesAsync();
+                errorMessage = null;
+            }
+            else
+            {
+                errorMessage = "Неверный формат продолжительности.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Ошибка: {ex.Message}";
+        }
+    }
+
+}

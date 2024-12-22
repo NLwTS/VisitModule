@@ -1,7 +1,11 @@
 ﻿@page "/visits"
-@inject VisitModule.Infrastructure.Repository.VisitRepository VisitRepository
+@using VisitModule.Domain.Model
+@using VisitModule.Infrastructure.Data
+@using VisitModule.Domain
+@using Microsoft.EntityFrameworkCore
+@inject VisitContext DbContext
 
-<h3>Посещения</h3>
+<h3>Список визитов</h3>
 
 @if (visits == null)
 {
@@ -9,14 +13,17 @@
 }
 else
 {
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Имя посетителя</th>
-                <th>Цель</th>
-                <th>Дата</th>
-                <th>Местоположение</th>
+                <th>Id</th>
+                <th>Посетитель</th>
+                <th>Цель визита</th>
+                <th>Локация</th>
+                <th>Дата визита</th>
+                <th>Продолжительность</th>
+                <th>Студент</th>
+                <th>Класс</th>
             </tr>
         </thead>
         <tbody>
@@ -26,8 +33,11 @@ else
                     <td>@visit.Id</td>
                     <td>@visit.VisitorName</td>
                     <td>@visit.Purpose</td>
-                    <td>@visit.VisitDate.ToShortDateString()</td>
                     <td>@visit.Location</td>
+                    <td>@visit.VisitDate.ToString("dd-MM-yyyy")</td>
+                    <td>@visit.Duration</td>
+                    <td>@visit.Student?.FullName</td>
+                    <td>@visit.Classroom?.ClassName</td>
                 </tr>
             }
         </tbody>
@@ -35,10 +45,14 @@ else
 }
 
 @code {
-    private List<VisitModule.Domain.Model.Visit> visits;
+    private List<Visit> visits;
 
+    // Метод для загрузки данных о визитах
     protected override async Task OnInitializedAsync()
     {
-        visits = await VisitRepository.GetVisitsAsync();
+        visits = await DbContext.Visits
+            .Include(v => v.Student)      // Включаем данные о студенте
+            .Include(v => v.Classroom)    // Включаем данные о классе
+            .ToListAsync();
     }
 }
