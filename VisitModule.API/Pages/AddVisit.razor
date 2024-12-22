@@ -1,0 +1,49 @@
+﻿@page "/add-visit"
+@using Microsoft.AspNetCore.Components.Forms
+@using VisitModule.Domain.Models
+@using VisitModule.UI.Services
+@inject VisitService VisitService
+@inject NavigationManager NavigationManager
+
+<h3>Добавить посещение</h3>
+
+<EditForm Model="newVisit" OnValidSubmit="AddVisit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Дата:</label>
+        <InputDate @bind-Value="newVisit.VisitDate" />
+    </div>
+    <div>
+        <label>ID Студента:</label>
+        <InputNumber @bind-Value="newVisit.StudentId" />
+    </div>
+    <div>
+        <label>ID Класса:</label>
+        <InputNumber @bind-Value="newVisit.ClassId" />
+    </div>
+    <div>
+        <label>Присутствие:</label>
+        <InputCheckbox @bind-Value="newVisit.IsPresent" />
+    </div>
+    <button type="submit">Добавить</button>
+</EditForm>
+
+@code {
+    private Visit newVisit = new Visit();
+
+    private async Task AddVisit()
+    {
+        var success = await VisitService.AddVisitAsync(newVisit);
+        if (success)
+        {
+            NavigationManager.NavigateTo("/visits");
+        }
+        else
+        {
+            // Обработка ошибок
+            Console.WriteLine("Ошибка при добавлении посещения.");
+        }
+    }
+}
