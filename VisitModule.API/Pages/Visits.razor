@@ -36,7 +36,8 @@ else
                     <td>@visit.Location</td>
                     <td>@visit.VisitDate.ToString("dd-MM-yyyy")</td>
                     <td>@visit.Duration</td>
-                    <td>@visit.Student?.FullName</td>
+                    <td>@visit.Student?.StudentFirstName</td>
+                    <td>@visit.Student?.StudentSecondName</td>
                     <td>@visit.Classroom?.ClassName</td>
                 </tr>
             }

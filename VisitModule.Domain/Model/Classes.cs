@@ -1,4 +1,6 @@
-﻿namespace VisitModule.Domain.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace VisitModule.Domain.Model
 {
     public class Visit
     {
@@ -20,11 +22,38 @@
 
     public class Student
     {
-        public int Id { get; set; }
-        public string FullName { get; set; } = string.Empty;
+        public int id { get; set; }
 
-        // Коллекция визитов, связанных с студентом
-        public ICollection<Visit> Visits { get; set; } = new List<Visit>();
+        [Range(0, double.MaxValue)]
+        public decimal scholarship { get; set; }
+
+        [Range(1, 6)]
+        public int year { get; set; }
+
+        [Range(0, int.MaxValue)]
+        public int group { get; set; }
+
+        [Required]
+        public string studentid { get; set; }
+
+        [Required]
+        public string StudentFirstName { get; set; }
+        [Required]
+        public string StudentSecondName { get; set; }
+        [Required]
+        public string fofeducation { get; set; }
+
+        [Required]
+        public string statusscholarship { get; set; }
+
+        [Required]
+        public DateTime entrance { get; set; }
+
+        [Required]
+        public DateTime dasende { get; set; }
+
+        public string specialsituation { get; set; }
+        public string participationadditionalprograms { get; set; }
     }
 
     public class Classroom

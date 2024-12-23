@@ -22,5 +22,25 @@ namespace VisitModule.Infrastructure.Data
                 optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=mydb;Username=postgres;Password=admin");
             }
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Student>()
+                .Property(s => s.statusscholarship)
+                .HasMaxLength(3);
+
+            modelBuilder.Entity<Student>()
+                .Property(s => s.fofeducation)
+                .HasMaxLength(50);
+
+            modelBuilder.Entity<Student>()
+                .Property(s => s.studentid)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            modelBuilder.Entity<Student>()
+                .HasIndex(s => s.studentid)
+                .IsUnique();
+        }
     }
+
 }

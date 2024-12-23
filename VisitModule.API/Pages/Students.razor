@@ -1,0 +1,59 @@
+﻿@page "/students"
+@using VisitModule.Domain.Model
+@using VisitModule.Infrastructure.Data
+@using VisitModule.Domain
+@using Microsoft.EntityFrameworkCore
+@inject VisitContext DbContext
+
+<h3>Список студентов</h3>
+
+@if (students == null)
+{
+    <p>Загрузка...</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Номер студенческого</th>
+                <th>Курс</th>
+                <th>Группа</th>
+                <th>Форма обучения</th>
+                <th>Стипендия</th>
+                <th>Стипендия (статус)</th>
+                <th>Дата поступления</th>
+                <th>Дата окончания</th>
+                <th>Особые статусы</th>
+                <th>Доп. программы</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in students)
+            {
+                <tr>
+                    <td>@student.studentid</td>
+                    <td>@student.year</td>
+                    <td>@student.group</td>
+                    <td>@student.fofeducation</td>
+                    <td>@student.scholarship</td>
+                    <td>@student.statusscholarship</td>
+                    <td>@student.entrance.ToShortDateString()</td>
+                    <td>@student.dasende.ToShortDateString()</td>
+                    <td>@student.specialsituation</td>
+                    <td>@student.participationadditionalprograms</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Student>? students;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Получаем список студентов из базы данных
+        students = await DbContext.Students.ToListAsync();
+    }
+}
