@@ -20,10 +20,10 @@ namespace VisitModule.Infrastructure.Repository
             return await _context.Visits.ToListAsync();
         }
 
-        public async Task<Visit> GetVisitByIdAsync(int id)
-        {
-            return await _context.Visits.FindAsync(id);
-        }
+        //public async Task<Visit> GetVisitByIdAsync(int id)
+        //{
+        //    return await _context.Visits.FindAsync(id);
+        //}
 
         public async Task AddVisitAsync(Visit visit)
         {

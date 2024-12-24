@@ -16,38 +16,56 @@
     @*     <ValidationMessage For="() => visit.VisitorName" /> *@
     @* </div> *@
 
-    <div class="form-group">
-        <label for="isStudent">Студент:</label>
-        <InputCheckbox @bind-Value="visit.IsStudent" id="isStudent" class="form-check-input" />
-    </div>
+    @* <div class="form-group"> *@
+    @*     <label for="isStudent">Студент:</label> *@
+    @*     <InputCheckbox @bind-Value="visit.IsStudent" id="isStudent" class="form-check-input" /> *@
+    @* </div> *@
 
     
 
+    @* <div class="mb-3"> *@
+    @*     <label for="Purpose" class="form-label">Цель визита</label> *@
+    @*     <InputText id="Purpose" class="form-control" @bind-Value="visit.Purpose" /> *@
+    @*     <ValidationMessage For="() => visit.Purpose" /> *@
+    @* </div> *@
+
     <div class="mb-3">
-        <label for="Purpose" class="form-label">Цель визита</label>
-        <InputText id="Purpose" class="form-control" @bind-Value="visit.Purpose" />
-        <ValidationMessage For="() => visit.Purpose" />
+        <label for="StudentId" class="form-label">Номер ученического билета:</label>
+        <InputNumber id="StudentId" class="form-control" @bind-Value="visit.StudentId" />
+        <ValidationMessage For="() => visit.StudentId" />
     </div>
 
     <div class="mb-3">
-        <label for="Location" class="form-label">Локация</label>
-        <InputText id="Location" class="form-control" @bind-Value="visit.Location" />
+        <label for="Location" class="form-label">Локация:</label>
+        <InputSelect @bind-Value="visit.Location" class="form-control">
+            <option value="">Выберите...</option>
+            <option value="Проспект Большевиков, 22к1">Проспект Большевиков, 22к1</option>
+            <option value="Наб. р. Мойки, 61">Наб. р. Мойки, 61</option>
+        </InputSelect>
         <ValidationMessage For="() => visit.Location" />
     </div>
 
     <div class="mb-3">
-        <label for="VisitDate" class="form-label">Дата визита</label>
+        <label for="VisitDate" class="form-label">Дата прохода:</label>
         <InputDate id="VisitDate" class="form-control" @bind-Value="visit.VisitDate" />
         <ValidationMessage For="() => visit.VisitDate" />
     </div>
 
     <div class="mb-3">
-        <label for="Duration" class="form-label">Продолжительность (часы:минуты)</label>
-        <InputText id="Duration" class="form-control" @bind-Value="duration" />
-        <ValidationMessage For="() => duration" />
+        <label for="VisitTime" class="form-label">Время прохода:</label>
+        <input type="time" id="VisitTime" class="form-control" @bind="visit.VisitTime" />
+        <ValidationMessage For="() => visit.VisitTime" />
     </div>
 
-    
+    <div class="mb-3">
+        <label for="Type" class="form-label">Тип прохода:</label>
+        <InputSelect @bind-Value="visit.Type" class="form-control">
+            <option value="">Выберите...</option>
+            <option value="Вход">Вход</option>
+            <option value="Выход">Выход</option>
+        </InputSelect>
+        <ValidationMessage For="() => visit.Type" />
+    </div>
 
     <button type="submit" class="btn btn-primary">Добавить</button>
 </EditForm>
@@ -59,7 +77,6 @@
 
 @code {
     private Visit visit = new Visit();
-    private string? duration;
     private string? errorMessage;
     
 
@@ -68,9 +85,7 @@
     {
         try
         {
-            if (TimeSpan.TryParse(duration, out var parsedDuration))
-            {
-                visit.Duration = parsedDuration;
+            
 
                 // Преобразуем дату визита в UTC
                 visit.VisitDate = DateTime.SpecifyKind(visit.VisitDate, DateTimeKind.Utc);
@@ -78,11 +93,7 @@
                 DbContext.Visits.Add(visit);
                 await DbContext.SaveChangesAsync();
                 errorMessage = null;
-            }
-            else
-            {
-                errorMessage = "Неверный формат продолжительности.";
-            }
+            
         }
         catch (Exception ex)
         {
