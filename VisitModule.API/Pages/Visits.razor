@@ -17,29 +17,26 @@ else
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Посетитель</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
                 <th>Цель визита</th>
                 <th>Локация</th>
                 <th>Дата визита</th>
                 <th>Продолжительность</th>
-                <th>Имя</th>
-                <th>Фамилия</th>
-                <th>Класс</th>
+                
             </tr>
         </thead>
         <tbody>
             @foreach (var visit in visits)
             {
                 <tr>
-                    <td>@visit.Id</td>
-                    <td>@visit.VisitorName</td>
+                     <td>@visit.Id</td>
+                    <td>@visit.Student?.StudentFirstName</td>
+                    <td>@visit.Student?.StudentSecondName</td>
                     <td>@visit.Purpose</td>
                     <td>@visit.Location</td>
                     <td>@visit.VisitDate.ToString("dd-MM-yyyy")</td>
-                    <td>@visit.Duration</td>
-                    <td>@visit.Student?.StudentFirstName</td>
-                    <td>@visit.Student?.StudentSecondName</td>
-                    <td>@visit.Classroom?.ClassName</td>
+                    <td>@visit.Duration</td   
                 </tr>
             }
         </tbody>
@@ -54,7 +51,6 @@ else
     {
         visits = await DbContext.Visits
             .Include(v => v.Student)      // Включаем данные о студенте
-            .Include(v => v.Classroom)    // Включаем данные о классе
             .ToListAsync();
     }
 }

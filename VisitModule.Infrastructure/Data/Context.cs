@@ -11,34 +11,22 @@ namespace VisitModule.Infrastructure.Data
 
         public DbSet<Visit> Visits { get; set; }
         public DbSet<Student> Students { get; set; }
-        public DbSet<Classroom> Classrooms { get; set; }
 
-        // Метод конфигурации (не обязателен, если использована строка подключения в AddDbContext)
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                // Подключение к базе данных PostgreSQL
-                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=mydb;Username=postgres;Password=admin");
-            }
-        }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Student>()
-                .Property(s => s.statusscholarship)
-                .HasMaxLength(3);
+            modelBuilder.Entity<Student>().HasKey(s => s.StudentListId);
 
             modelBuilder.Entity<Student>()
                 .Property(s => s.fofeducation)
                 .HasMaxLength(50);
 
             modelBuilder.Entity<Student>()
-                .Property(s => s.studentid)
-                .HasMaxLength(50)
+                .Property(s => s.StudentListId)
                 .IsRequired();
 
             modelBuilder.Entity<Student>()
-                .HasIndex(s => s.studentid)
+                .HasIndex(s => s.StudentListId)
                 .IsUnique();
         }
     }
