@@ -11,7 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisitModule.Infrastructure"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{2ED25A9B-9F98-4D14-A7F0-77980D065890}"
 	ProjectSection(SolutionItems) = preProject
-		BDDUMP.sql = BDDUMP.sql
+		..\..\dump-VisitDb-202412242331.sql = ..\..\dump-VisitDb-202412242331.sql
+		..\..\dump-VisitDb-202412242333.tar = ..\..\dump-VisitDb-202412242333.tar
 		scheme.png = scheme.png
 		scheme.txt = scheme.txt
 	EndProjectSection

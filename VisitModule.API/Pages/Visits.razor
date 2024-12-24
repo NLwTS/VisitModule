@@ -16,27 +16,29 @@ else
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
+                @* <th>Id</th> *@
+                <th>Тип прохода:</th>
                 <th>Имя</th>
                 <th>Фамилия</th>
-                <th>Цель визита</th>
                 <th>Локация</th>
-                <th>Дата визита</th>
-                <th>Продолжительность</th>
-                
+                <th>Дата прохода</th>
+                <th>Время прохода</th>
+
+
             </tr>
         </thead>
         <tbody>
             @foreach (var visit in visits)
             {
                 <tr>
-                     <td>@visit.Id</td>
+                    @* <td>@visit.Id</td> *@
+                    <td>@visit.Type</td
                     <td>@visit.Student?.StudentFirstName</td>
                     <td>@visit.Student?.StudentSecondName</td>
-                    <td>@visit.Purpose</td>
                     <td>@visit.Location</td>
                     <td>@visit.VisitDate.ToString("dd-MM-yyyy")</td>
-                    <td>@visit.Duration</td   
+                    <td>@visit.VisitTime.ToString()</td>
+                       
                 </tr>
             }
         </tbody>
@@ -50,7 +52,8 @@ else
     protected override async Task OnInitializedAsync()
     {
         visits = await DbContext.Visits
-            .Include(v => v.Student)      // Включаем данные о студенте
-            .ToListAsync();
+   
+             .Include(v => v.Student)     // Включаем данные о студенте
+             .ToListAsync();
     }
 }
