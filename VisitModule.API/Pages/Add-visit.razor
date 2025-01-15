@@ -10,28 +10,16 @@
 <EditForm Model="visit" OnValidSubmit="AddVisit">
     <DataAnnotationsValidator />
 
-    @* <div class="mb-3"> *@
-    @*     <label for="VisitorName" class="form-label">Имя посетителя</label> *@
-    @*     <InputText id="VisitorName" class="form-control" @bind-Value="visit.VisitorName" /> *@
-    @*     <ValidationMessage For="() => visit.VisitorName" /> *@
-    @* </div> *@
-
-    @* <div class="form-group"> *@
-    @*     <label for="isStudent">Студент:</label> *@
-    @*     <InputCheckbox @bind-Value="visit.IsStudent" id="isStudent" class="form-check-input" /> *@
-    @* </div> *@
-
-    
-
-    @* <div class="mb-3"> *@
-    @*     <label for="Purpose" class="form-label">Цель визита</label> *@
-    @*     <InputText id="Purpose" class="form-control" @bind-Value="visit.Purpose" /> *@
-    @*     <ValidationMessage For="() => visit.Purpose" /> *@
-    @* </div> *@
+    <div class="mb-3">
+        <label for="LastName" class="form-label">Фамилия:</label>
+        <InputText id="LastName" class="form-control" @bind-Value="lastName" />
+        <button type="button" class="btn btn-secondary mt-2" @onclick="FindStudentId">Найти номер студенческого</button>
+        <ValidationMessage For="() => lastName" />
+    </div>
 
     <div class="mb-3">
-        <label for="StudentId" class="form-label">Номер ученического билета:</label>
-        <InputNumber id="StudentId" class="form-control" @bind-Value="visit.StudentId" />
+        <label for="StudentId" class="form-label">Номер студенческого билета:</label>
+        <InputNumber id="StudentId" class="form-control" @bind-Value="visit.StudentId" readonly="readonly" />
         <ValidationMessage For="() => visit.StudentId" />
     </div>
 
@@ -78,27 +66,44 @@
 @code {
     private Visit visit = new Visit();
     private string? errorMessage;
-    
+    private string? lastName;
 
+    private async Task FindStudentId()
+    {
+        try
+        {
+            // Поиск студента по фамилии
+            var student = await DbContext.Students.FirstOrDefaultAsync(s => s.StudentSecondName == lastName);
+            if (student != null)
+            {
+                visit.StudentId = student.StudentListId;
+                errorMessage = null;
+            }
+            else
+            {
+                errorMessage = "Студент с такой фамилией не найден.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Ошибка поиска: {ex.Message}";
+        }
+    }
 
     private async Task AddVisit()
     {
         try
         {
-            
+            // Преобразуем дату визита в UTC
+            visit.VisitDate = DateTime.SpecifyKind(visit.VisitDate, DateTimeKind.Utc);
 
-                // Преобразуем дату визита в UTC
-                visit.VisitDate = DateTime.SpecifyKind(visit.VisitDate, DateTimeKind.Utc);
-
-                DbContext.Visits.Add(visit);
-                await DbContext.SaveChangesAsync();
-                errorMessage = null;
-            
+            DbContext.Visits.Add(visit);
+            await DbContext.SaveChangesAsync();
+            errorMessage = null;
         }
         catch (Exception ex)
         {
             errorMessage = $"Ошибка: {ex.Message}";
         }
     }
-
 }
