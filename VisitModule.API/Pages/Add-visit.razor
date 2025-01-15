@@ -13,6 +13,8 @@
     <div class="mb-3">
         <label for="LastName" class="form-label">Фамилия:</label>
         <InputText id="LastName" class="form-control" @bind-Value="lastName" />
+        <label for="FirstName" class="form-label">Имя:</label>
+        <InputText id="FirstName" class="form-control" @bind-Value="firstName" />
         <button type="button" class="btn btn-secondary mt-2" @onclick="FindStudentId">Найти номер студенческого</button>
         <ValidationMessage For="() => lastName" />
     </div>
@@ -63,17 +65,20 @@
     <div class="alert alert-danger">@errorMessage</div>
 }
 
+
 @code {
     private Visit visit = new Visit();
     private string? errorMessage;
     private string? lastName;
+    private string? firstName;
 
     private async Task FindStudentId()
     {
         try
         {
-            // Поиск студента по фамилии
-            var student = await DbContext.Students.FirstOrDefaultAsync(s => s.StudentSecondName == lastName);
+            // Поиск студента по фамилии и имени
+            var student = await DbContext.Students
+                .FirstOrDefaultAsync(s => s.StudentSecondName == lastName && s.StudentFirstName == firstName);
             if (student != null)
             {
                 visit.StudentId = student.StudentListId;
@@ -81,7 +86,7 @@
             }
             else
             {
-                errorMessage = "Студент с такой фамилией не найден.";
+                errorMessage = "Студент не найден";
             }
         }
         catch (Exception ex)

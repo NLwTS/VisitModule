@@ -52,8 +52,8 @@ else
             {
                 <tr>
                     <td>@visit.Type</td>
-                    <td>@visit.Student?.StudentFirstName</td>
-                    <td>@visit.Student?.StudentSecondName</td>
+                    <td>@visit.Student.StudentFirstName</td>
+                    <td>@visit.Student.StudentSecondName</td>
                     <td>@visit.Location</td>
                     <td>@visit.VisitDate.ToString("dd-MM-yyyy")</td>
                     <td>@visit.VisitTime.ToString()</td>
@@ -74,8 +74,11 @@ else
     // Метод для загрузки данных о визитах с фильтрацией и сортировкой
     protected override async Task OnInitializedAsync()
     {
+        currentSortColumn = nameof(Visit.VisitDate); // Сортировка по дате
+        isAscending = false; // По умолчанию сортируем от свежей даты к старой
         await LoadVisitsAsync();
     }
+
 
     private async Task LoadVisitsAsync()
     {
@@ -116,7 +119,10 @@ else
                     query = isAscending ? query.OrderBy(v => v.Location) : query.OrderByDescending(v => v.Location);
                     break;
                 case nameof(Visit.VisitDate):
-                    query = isAscending ? query.OrderBy(v => v.VisitDate) : query.OrderByDescending(v => v.VisitDate);
+                    // Сортировка по дате и времени
+                    query = isAscending
+                        ? query.OrderBy(v => v.VisitDate).ThenBy(v => v.VisitTime)
+                        : query.OrderByDescending(v => v.VisitDate).ThenByDescending(v => v.VisitTime);
                     break;
                 case nameof(Visit.VisitTime):
                     query = isAscending ? query.OrderBy(v => v.VisitTime) : query.OrderByDescending(v => v.VisitTime);
@@ -126,6 +132,7 @@ else
 
         visits = await query.ToListAsync();
     }
+
 
     // Метод для сортировки по столбцам
     private async void SortTable(string columnName)
