@@ -7,9 +7,27 @@
 
 <h3>Список визитов</h3>
 
-<!-- Поле для поиска по фамилии студента и по StudentId -->
+<!-- Фильтры: поиск, выбор дат -->
 <div class="mb-3">
-    <input type="text" class="form-control" placeholder="Поиск по фамилии или ID студента" @bind="searchTerm" @oninput="OnSearchChanged" />
+    <input type="text" class="form-control mb-2" placeholder="Поиск по фамилии или ID студента" @bind="searchTerm" @oninput="OnSearchChanged" />
+</div>
+
+<!-- Фильтр по типу -->
+<div class="mb-3">
+    <label class="form-check">
+        <input type="checkbox" class="form-check-input" @bind="showEntrances" />
+        <span class="form-check-label">Показать только входы</span>
+    </label>
+    <label class="form-check">
+        <input type="checkbox" class="form-check-input" @bind="showExits" />
+        <span class="form-check-label">Показать только выходы</span>
+    </label>
+</div>
+
+
+<!-- Кнопка обновления -->
+<div class="mb-3">
+    <button class="btn btn-primary" @onclick="RefreshVisits">Обновить список</button>
 </div>
 
 @if (visits == null)
@@ -34,8 +52,8 @@ else
             {
                 <tr>
                     <td>@visit.Type</td>
-                    <td>@visit.Student.StudentFirstName</td>
-                    <td>@visit.Student.StudentSecondName</td>
+                    <td>@visit.Student?.StudentFirstName</td>
+                    <td>@visit.Student?.StudentSecondName</td>
                     <td>@visit.Location</td>
                     <td>@visit.VisitDate.ToString("dd-MM-yyyy")</td>
                     <td>@visit.VisitTime.ToString()</td>
@@ -50,6 +68,8 @@ else
     private string currentSortColumn;
     private bool isAscending = true;
     private string searchTerm = string.Empty; // Текущий текст поиска
+    private bool showEntrances = false; // Фильтр: только входы
+    private bool showExits = false;     // Фильтр: только выходы
 
     // Метод для загрузки данных о визитах с фильтрацией и сортировкой
     protected override async Task OnInitializedAsync()
@@ -57,16 +77,25 @@ else
         await LoadVisitsAsync();
     }
 
-    // Метод для загрузки данных о визитах с фильтрацией и сортировкой
     private async Task LoadVisitsAsync()
     {
         var query = DbContext.Visits.Include(v => v.Student).AsQueryable();
 
-        // Фильтрация по фамилии студента или по StudentId (если задано значение поиска)
+        // Фильтрация по фамилии или ID студента
         if (!string.IsNullOrEmpty(searchTerm))
         {
             query = query.Where(v => v.Student.StudentSecondName.Contains(searchTerm) ||
-                                      v.Student.StudentListId.ToString().Contains(searchTerm)); // Дополнительное условие для StudentId
+                                      v.Student.StudentListId.ToString().Contains(searchTerm));
+        }
+
+        // Фильтрация по типу входа/выхода
+        if (showEntrances && !showExits)
+        {
+            query = query.Where(v => v.Type == "Вход");
+        }
+        else if (!showEntrances && showExits)
+        {
+            query = query.Where(v => v.Type == "Выход");
         }
 
         // Применяем сортировку
@@ -75,34 +104,22 @@ else
             switch (currentSortColumn)
             {
                 case nameof(Visit.Type):
-                    query = isAscending
-                        ? query.OrderBy(v => v.Type)
-                        : query.OrderByDescending(v => v.Type);
+                    query = isAscending ? query.OrderBy(v => v.Type) : query.OrderByDescending(v => v.Type);
                     break;
                 case nameof(Visit.Student.StudentFirstName):
-                    query = isAscending
-                        ? query.OrderBy(v => v.Student.StudentFirstName)
-                        : query.OrderByDescending(v => v.Student.StudentFirstName);
+                    query = isAscending ? query.OrderBy(v => v.Student.StudentFirstName) : query.OrderByDescending(v => v.Student.StudentFirstName);
                     break;
                 case nameof(Visit.Student.StudentSecondName):
-                    query = isAscending
-                        ? query.OrderBy(v => v.Student.StudentSecondName)
-                        : query.OrderByDescending(v => v.Student.StudentSecondName);
+                    query = isAscending ? query.OrderBy(v => v.Student.StudentSecondName) : query.OrderByDescending(v => v.Student.StudentSecondName);
                     break;
                 case nameof(Visit.Location):
-                    query = isAscending
-                        ? query.OrderBy(v => v.Location)
-                        : query.OrderByDescending(v => v.Location);
+                    query = isAscending ? query.OrderBy(v => v.Location) : query.OrderByDescending(v => v.Location);
                     break;
                 case nameof(Visit.VisitDate):
-                    query = isAscending
-                        ? query.OrderBy(v => v.VisitDate)
-                        : query.OrderByDescending(v => v.VisitDate);
+                    query = isAscending ? query.OrderBy(v => v.VisitDate) : query.OrderByDescending(v => v.VisitDate);
                     break;
                 case nameof(Visit.VisitTime):
-                    query = isAscending
-                        ? query.OrderBy(v => v.VisitTime)
-                        : query.OrderByDescending(v => v.VisitTime);
+                    query = isAscending ? query.OrderBy(v => v.VisitTime) : query.OrderByDescending(v => v.VisitTime);
                     break;
             }
         }
@@ -137,6 +154,48 @@ else
     private async void OnSearchChanged(ChangeEventArgs e)
     {
         searchTerm = e.Value?.ToString() ?? string.Empty;
+        await LoadVisitsAsync();
+    }
+
+    // Метод для обработки изменения фильтра типа
+    private async void OnTypeFilterChanged(ChangeEventArgs e)
+    {
+        await LoadVisitsAsync();
+    }
+
+    private async Task OnFilterChanged()
+    {
+        await LoadVisitsAsync();
+    }
+
+    private bool ShowEntrances
+    {
+        get => showEntrances;
+        set
+        {
+            if (showEntrances != value)
+            {
+                showEntrances = value;
+                _ = OnFilterChanged();
+            }
+        }
+    }
+
+    private bool ShowExits
+    {
+        get => showExits;
+        set
+        {
+            if (showExits != value)
+            {
+                showExits = value;
+                _ = OnFilterChanged();
+            }
+        }
+    }
+    // Метод для ручного обновления списка
+    private async Task RefreshVisits()
+    {
         await LoadVisitsAsync();
     }
 }
